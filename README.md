@@ -3,6 +3,9 @@
 > **A complete guide to converting a $4 Raspberry Pi Pico into a professional SWD debugger using the official Debug Probe firmware — validated on nRF52840 and STM32F411 Discovery.**
 
 ---
+![Connection Diagram](docs/rpi-pico-debug-connection.jpg)
+---
+
 
 ## Table of Contents
 
@@ -177,6 +180,9 @@ build/debugprobe_on_pico.uf2
 ```
 
 The `.uf2` file is the UF2 (USB Flashing Format) image — a format designed specifically for drag-and-drop flashing on RP2040 devices.
+
+
+![Connection Diagram](docs/output-file.png)
 
 ---
 
