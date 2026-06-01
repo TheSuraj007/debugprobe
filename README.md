@@ -344,25 +344,52 @@ Download from [https://openocd.org/pages/getting-openocd.html](https://openocd.o
 
 ### Basic OpenOCD Launch Command
 
-The general form for launching OpenOCD with the Pico debug probe is:
+The general form for launching OpenOCD with the Raspberry Pi Pico Debug Probe is:
 
 ```bash
 openocd \
-  -f interface/cmsis-dap.cfg \   # Selects the CMSIS-DAP interface (our Pico probe)
-  -f target/<your_target>.cfg    # Selects the target MCU configuration
+    -s < OpenOCD scripts directory > \    # Example: /home/surajkumar/MaximSDK/tools/OpenOCD/scripts
+    -f interface/cmsis-dap.cfg \        # CMSIS-DAP debug probe
+    -f target/<target_mcu>.cfg          # Target MCU configuration
 ```
-
-### Target-Specific Commands
-
-Replace `<your_target>.cfg` with the correct file for your MCU:
-
-**Nordic nRF52 series (nRF52840, nRF52832, etc.):**
-
+### Understanding the -s Option
+The **-s** argument specifies the location of the OpenOCD script files.
+Many OpenOCD installations already know where their default script directory is located. In such cases, commands like the following work without specifying -s:
 ```bash
 openocd \
-  -f interface/cmsis-dap.cfg \
-  -f target/nrf52.cfg
+    -f interface/cmsis-dap.cfg \
+    -f target/max32665.cfg
 ```
+
+However, some SDKs provide their own OpenOCD distribution and store the scripts in a custom location. In these cases, OpenOCD may not be able to locate the configuration files unless the script path is explicitly provided using **-s**.
+
+If you encounter errors such as:
+```bash
+Error: Can't find interface/cmsis-dap.cfg
+```
+or
+```bash
+Error: Can't find target/<target>.cfg
+```
+specify the scripts directory using the -s option.
+
+## Example Commands
+**Maxim MAX32 Series (MAX32665, MAX32666, MAX32655, etc.)**
+```bash
+openocd \
+    -s /home/surajkumar/MaximSDK/Tools/OpenOCD/scripts \
+    -f interface/cmsis-dap.cfg \
+    -f target/max32665.cfg
+```    
+**Nordic nRF52 Series (nRF52840, nRF52832, etc.)**
+```bash
+openocd \
+    -f interface/cmsis-dap.cfg \
+    -f target/nrf52.cfg
+```
+
+Tip: If OpenOCD cannot locate the interface or target configuration files, add the **-s** option and point it to your OpenOCD scripts directory.
+
 
 **STM32F4 series (STM32F411, STM32F407, STM32F446, etc.):**
 
